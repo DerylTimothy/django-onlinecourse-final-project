@@ -4,6 +4,26 @@ from django.shortcuts import get_object_or_404, redirect, render
 from .models import Choice, Course, Enrollment, Question, Submission
 
 
+def index(request):
+    """Menampilkan daftar semua kursus."""
+    courses = Course.objects.all()
+    return render(
+        request,
+        "onlinecourse/course_list_bootstrap.html",
+        {"course_list": courses},
+    )
+
+
+def course_details(request, course_id):
+    """Menampilkan detail kursus beserta soal ujiannya."""
+    course = get_object_or_404(Course, pk=course_id)
+    return render(
+        request,
+        "onlinecourse/course_details_bootstrap.html",
+        {"course": course},
+    )
+
+
 def extract_answers(request):
     """Mengambil daftar ID choice yang dipilih dari form POST."""
     submitted_answers = []
